@@ -13,7 +13,10 @@ const ToDoList = (props) => {
       <List>
         {props.toDoList.map((list, index) => {
           return (
-            <ListItem key={index}>
+            <ListItem
+              key={index}
+              className={list.checked ? "list-opactity" : ""}
+            >
               <CheckToDo
                 checkList={() => props.checkToDoItem(list.id, "checkToDo")}
               />
@@ -22,7 +25,13 @@ const ToDoList = (props) => {
                 className={list.checked ? " strike-through" : ""}
               />
               <EditTodo
-                editList={() => props.editToDoItem(list.id, list.listVal)}
+                editList={() => {
+                  if (list.checked) {
+                    return false;
+                  } else {
+                    props.editToDoItem(list.id, list.listVal);
+                  }
+                }}
               />
               <DeleteToDo
                 deletelist={() => props.deleteToDoItem(list.id, "deleteToDo")}

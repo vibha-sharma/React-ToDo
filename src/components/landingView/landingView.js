@@ -37,14 +37,12 @@ const LandingView = () => {
   const listFilter = (filterItem, toDoAction) => {
     setToDolists(
       toDolists.filter((item) => {
-        if (toDoAction === "deleteToDo") {
-          if (item.id !== filterItem) {
-            return item;
-          }
+        if (toDoAction === "deleteToDo" && item.id !== filterItem) {
+          return item;
         }
         if (toDoAction === "checkToDo") {
           if (item.id === filterItem) {
-            item.checked = true;
+            item.checked = item.checked ? false : true;
           }
           return item;
         }
