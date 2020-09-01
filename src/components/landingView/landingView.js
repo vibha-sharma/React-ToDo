@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import AddToDo from "./addToDo";
-import ToDoList from "./toDoList";
+import AddToDo from "../addToDo/addToDo";
+import ToDoList from "../toDoList/toDoList";
+import { randomNumber } from "../../common";
 const LandingView = () => {
   const [toDolists, setToDolists] = useState([]);
   const [toDolistValue, setToDolistValue] = useState("");
   const [idForUpdatedToDo, setIdForUpdatedToDo] = useState(null);
-  const randomNumber = (min, max, floatFlag) => {
-    let r = Math.random() * (max - min) + min;
-    return floatFlag ? r : Math.floor(r);
-  };
 
   const addNewToDo = (e) => {
     setToDolistValue(e.target.value);
@@ -36,25 +33,30 @@ const LandingView = () => {
       setToDolistValue("");
     }
   };
-  const deleteToDo = (id) => {
+
+  const listFilter = (filterItem, toDoAction) => {
     setToDolists(
       toDolists.filter((item) => {
-        if (item.id !== id) {
+        if (toDoAction === "deleteToDo") {
+          if (item.id !== filterItem) {
+            return item;
+          }
+        }
+        if (toDoAction === "checkToDo") {
+          if (item.id === filterItem) {
+            item.checked = true;
+          }
           return item;
         }
       })
     );
   };
+  const deleteToDo = (id, deleteToDo) => {
+    listFilter(id, deleteToDo);
+  };
 
-  const checkToDo = (id) => {
-    setToDolists(
-      toDolists.filter((item) => {
-        if (item.id === id) {
-          item.checked = true;
-        }
-        return item;
-      })
-    );
+  const checkToDo = (id, checkToDo) => {
+    listFilter(id, checkToDo);
   };
 
   const editToDo = (id, toDoVal) => {

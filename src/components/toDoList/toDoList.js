@@ -2,10 +2,11 @@ import React from "react";
 import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import "./toDoList.css";
 
-import EditTodo from "./editToDo";
-import DeleteToDo from "./deleteToDo";
-import CheckToDo from "./checkToDo";
+import EditTodo from "../editToDo/editToDo";
+import DeleteToDo from "../deleteToDo/deleteToDo";
+import CheckToDo from "../checkToDo/checkToDo";
 const ToDoList = (props) => {
   return (
     <div>
@@ -13,7 +14,9 @@ const ToDoList = (props) => {
         {props.toDoList.map((list, index) => {
           return (
             <ListItem key={index}>
-              <CheckToDo checkList={() => props.checkToDoItem(list.id)} />
+              <CheckToDo
+                checkList={() => props.checkToDoItem(list.id, "checkToDo")}
+              />
               <ListItemText
                 primary={list.listVal}
                 className={list.checked ? " strike-through" : ""}
@@ -21,7 +24,9 @@ const ToDoList = (props) => {
               <EditTodo
                 editList={() => props.editToDoItem(list.id, list.listVal)}
               />
-              <DeleteToDo deletelist={() => props.deleteToDoItem(list.id)} />
+              <DeleteToDo
+                deletelist={() => props.deleteToDoItem(list.id, "deleteToDo")}
+              />
             </ListItem>
           );
         })}
