@@ -1,23 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import Checkbox from "@material-ui/core/Checkbox";
-import { ToDosList } from "../../store/toDosContext";
+import { checkList } from "../../actions/actions";
+import { connect } from "react-redux";
 const CheckToDo = (props) => {
-  const [toDoslist, setToDolists] = useContext(ToDosList);
-  const checkToDo = (listItem) => {
-    setToDolists(
-      toDoslist.filter((list) => {
-        if (list.id === listItem.id) {
-          list.checked = list.checked ? false : true;
-        }
-        return list;
-      })
-    );
+  const checkListToDo = () => {
+    props.checkList(props.list.id);
   };
   return (
     <div>
-      <Checkbox onClick={() => checkToDo(props.list)} />
+      <Checkbox onClick={checkListToDo} />
     </div>
   );
 };
 
-export default CheckToDo;
+export default connect(null, { checkList })(CheckToDo);

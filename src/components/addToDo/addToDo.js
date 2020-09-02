@@ -1,19 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
-import { ToDosList } from "../../store/toDosContext";
+import * as actions from "../../actions/actions";
 import { randomNumber } from "../../common";
 const AddToDo = (props) => {
-  const [toDoslist, setToDolists] = useContext(ToDosList);
   const addNewToDo = (e) => {
     if (e.keyCode === 13) {
-      setToDolists([
-        ...toDoslist,
-        {
-          listVal: e.target.value,
-          checked: false,
-          id: randomNumber(10, 100000000),
-        },
-      ]);
+      props.addList({
+        val: e.target.value,
+        id: randomNumber(10, 100000),
+        checked: false,
+      });
       e.target.value = "";
     }
   };
@@ -23,4 +20,6 @@ const AddToDo = (props) => {
     </div>
   );
 };
-export default AddToDo;
+export default connect(null, {
+  ...actions,
+})(AddToDo);

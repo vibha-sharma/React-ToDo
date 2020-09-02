@@ -1,24 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { ToDosList } from "../../store/toDosContext";
-
+import { deleteList } from "../../actions/actions";
+import { connect } from "react-redux";
 const DeleteToDo = (props) => {
-  const [toDoslist, setToDolists] = useContext(ToDosList);
-  const deleteItem = (listItem) => {
-    console.log("listItem", listItem.id);
-    setToDolists(
-      toDoslist.filter((list) => {
-        if (list.id !== listItem.id) {
-          return list;
-        }
-      })
-    );
+  const deleteItem = () => {
+    props.deleteList(props.list.id);
   };
   return (
     <div>
-      <DeleteIcon onClick={() => deleteItem(props.list)} />
+      <DeleteIcon onClick={deleteItem} />
     </div>
   );
 };
 
-export default DeleteToDo;
+export default connect(null, { deleteList })(DeleteToDo);

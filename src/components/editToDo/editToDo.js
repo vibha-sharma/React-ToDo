@@ -1,16 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 import EditIcon from "@material-ui/icons/Edit";
-import { ToDosList } from "../../store/toDosContext";
+import { editList, addList } from "../../actions/actions";
+import { connect } from "react-redux";
 const EditTodo = (props) => {
-  const [toDoslist, setToDolists] = useContext(ToDosList);
-  const editTodo = (listitem) => {
-    // Edit task pending
+  const editTodoList = () => {
+    //props.addList(props.list.val);
+    props.editList(props.list);
   };
   return (
     <div>
-      <EditIcon onClick={() => editTodo(props.list)} />
+      <EditIcon onClick={editTodoList} />
     </div>
   );
 };
 
-export default EditTodo;
+export default connect(null, { editList, addList })(EditTodo);
